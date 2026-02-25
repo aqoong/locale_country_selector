@@ -1,0 +1,19 @@
+name: locale_country_selector
+description: Deterministic country auto-selection using only OS locales (language + region). No GPS, IP, SIM, or permissioned APIs. Flutter mobile (Android/iOS), pure Dart.
+version: 0.1.0
+repository: https://github.com/yourusername/locale_country_selector
+
+environment:
+  sdk: ">=2.17.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
