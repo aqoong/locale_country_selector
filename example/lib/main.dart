@@ -29,17 +29,19 @@ class _ExamplePage extends StatefulWidget {
 }
 
 class _ExamplePageState extends State<_ExamplePage> {
-  static const List<String> supportedCountries = ['KR', 'US'];
+  static const List<String> supportedCountries = ['KR', 'US', 'DE'];
   static const Map<String, List<String>> countryLanguages = {
     'KR': ['ko'],
     'US': ['en'],
+    'DE': ['de']
   };
   static const Map<String, String> languageChampion = {
     'en': 'US',
     'ko': 'KR',
+    'de': 'DE',
   };
 
-  late String _selectedCountry;
+  late String? _selectedCountry;
   late List<Locale> _deviceLocales;
 
   @override
@@ -59,7 +61,7 @@ class _ExamplePageState extends State<_ExamplePage> {
       locales: _deviceLocales,
       countryLanguages: countryLanguages,
       languageChampion: languageChampion,
-      fallbackCountry: 'US',
+      regionAffinityMap: {'GB': 'DE'},  // en-GB 사용자 → DE 선택
     );
     setState(() {});
   }
@@ -100,7 +102,7 @@ class _ExamplePageState extends State<_ExamplePage> {
           ),
           const SizedBox(height: 8),
           Text(
-            _selectedCountry,
+            _selectedCountry ?? 'NULL',
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   fontFamily: 'monospace',
                 ),

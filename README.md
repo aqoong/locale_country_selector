@@ -20,17 +20,20 @@ Deterministic country auto-selection using **only** the device's OS locales (lan
 
 For each locale in the preferred locales list, in order:
 
-1. **Exact region match:** If `locale.countryCode` is in `supportedCountries`, return that country.
-2. **Language match:** Find all supported countries whose `countryLanguages` list contains `locale.languageCode`.
+1. **Exact region match:** If the locale's region code (from `Locale`, e.g. "en_US" → "US") is in `supportedCountries`, return that country.
+2. **Region affinity mapping:** If the region is not supported, `regionAffinityMap` is consulted (e.g. `"GB"` → `"DE"`). If the mapped country is supported, return it. This helps avoid unintuitive outcomes like "UK user → US" when only language matching would apply—e.g. supported `[DE, US]`, locale `en-GB` → with `regionAffinityMap: {'GB': 'DE'}` you get `DE` instead of `US`.
+3. **Language match:** Find all supported countries whose `countryLanguages` list contains the locale's language code.
    - If exactly one match → return it.
    - If multiple matches:
      - If `languageChampion` has an entry for this language and that country is supported → return the champion.
      - Otherwise → return the first match according to the original `supportedCountries` order.
-3. If no locale yields a match → return `fallbackCountry`.
-   - If `fallbackCountry` is not in `supportedCountries`, return the first item in `supportedCountries`.
-   - If `supportedCountries` is empty, return `fallbackCountry` as-is.
+4. **Fallback:** If no locale yields a match:
+   - If `fallbackCountry` is null → return null.
+   - If `supportedCountries` is empty → return `fallbackCountry` as-is.
+   - If `fallbackCountry` is in `supportedCountries` → return it.
+   - Otherwise → return the first item in `supportedCountries`.
 
-Inputs are normalized: country codes to uppercase, language codes to lowercase.
+Inputs are normalized: country/region codes to uppercase, language codes to lowercase. `regionAffinityMap` keys and values are normalized the same way.
 
 ## Usage
 
@@ -57,12 +60,30 @@ final country = LocaleCountrySelector.selectCountry(
 // country is e.g. 'US' or 'KR'
 ```
 
+With **region affinity** (e.g. UK users → DE when you support DE and US):
+
+```dart
+final country = LocaleCountrySelector.selectCountry(
+  supportedCountries: ['DE', 'US'],
+  locales: [const Locale('en', 'GB')],
+  countryLanguages: {'DE': ['en', 'de'], 'US': ['en']},
+  regionAffinityMap: {'GB': 'DE'},
+  fallbackCountry: 'US',
+);
+// Returns 'DE' (en-GB region mapped to DE); without the map it would be 'US'.
+```
+
 ## Configuration tips
 
 ### countryLanguages
 
 - Map each **supported** country code to the list of BCP-47 primary language subtags (e.g. `"en"`, `"ko"`, `"fr"`) that your app supports for that country.
 - Include only languages you actually support; the selector will not choose a country for a language that isn’t in any list.
+
+### regionAffinityMap
+
+- Maps **unsupported** region codes to **supported** country codes (e.g. `'GB': 'DE'`).
+- Applied after exact region match and before language match. If the user's region (e.g. GB) is not in `supportedCountries`, the selector checks this map; if the mapped country (e.g. DE) is supported, that country is returned. This avoids "UK user → US" when you prefer another market (e.g. DE) for that region.
 
 ### languageChampion
 
@@ -94,4 +115,4 @@ fvm dart test
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+BSD 3-Clause. See [LICENSE](LICENSE).
