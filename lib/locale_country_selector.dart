@@ -55,19 +55,12 @@ String? _normalizeCountry(String? s) {
   return (v == null || v.isEmpty) ? null : v;
 }
 
-/// Extracts region (country code equivalent) from [Locale] via toString().
-/// Handles "en_US", "en-US", "en_US_POSIX". Returns alpha-2 uppercase or M49.
-String? _extractRegion(Locale l) {
-  final s = l.toString().trim();
-  if (s.isEmpty) return null;
-  final parts = s.split(RegExp('[-_]'));
-  if (parts.length < 2) return null;
-  final candidate = parts[1];
-  final isAlpha2 = RegExp(r'^[A-Za-z]{2}$').hasMatch(candidate);
-  if (isAlpha2) return candidate.toUpperCase();
-  final isM49 = RegExp(r'^\d{3}$').hasMatch(candidate);
-  if (isM49) return candidate;
-  return null;
+/// Reads the region directly from [Locale.countryCode].
+/// Returns an alpha-2 uppercase code or a three-digit M49 region.
+String? _extractRegion(Locale locale) {
+  final region = _normalizeCountry(locale.countryCode);
+  if (region == null) return null;
+  return RegExp(r'^(?:[A-Z]{2}|[0-9]{3})$').hasMatch(region) ? region : null;
 }
 
 /// Extracts and normalizes language code from [Locale].
@@ -156,7 +149,7 @@ class LocaleCountrySelector {
   /// **Selection priority (per locale, in [locales] order):**
   ///
   /// 1. **Exact region match:** If the locale's region code (from
-  ///    [Locale.toString()], e.g. "en_US" → "US") is in [supportedCountries],
+  ///    [Locale.countryCode], e.g. "en_US" → "US") is in [supportedCountries],
   ///    that country is returned.
   /// 2. **Region affinity mapping:** If the region is not supported, [regionAffinityMap]
   ///    is consulted (e.g. "GB" → "DE"). If the mapped country is supported, it is
@@ -186,7 +179,7 @@ class LocaleCountrySelector {
   /// final locales = WidgetsBinding.instance.platformDispatcher.locales;
   /// final country = LocaleCountrySelector.selectCountry(
   ///   supportedCountries: ['KR', 'US'],
-  ///   locales: locales.map((l) => Locale(l.languageCode, l.countryCode)).toList(),
+  ///   locales: locales,
   ///   countryLanguages: {'KR': ['ko'], 'US': ['en']},
   ///   languageChampion: {'en': 'US', 'ko': 'KR'},
   ///   fallbackCountry: 'US',
@@ -200,6 +193,7 @@ class LocaleCountrySelector {
   ///   supportedCountries: ['DE', 'US'],
   ///   locales: [const Locale('en', 'GB')],
   ///   countryLanguages: {'DE': ['en', 'de'], 'US': ['en']},
+  ///   languageChampion: {'en': 'US'},
   ///   regionAffinityMap: {'GB': 'DE'},
   ///   fallbackCountry: 'US',
   /// );
@@ -247,6 +241,6 @@ class LocaleCountrySelector {
   static String localeLanguageCode(Locale l) => _extractLanguage(l);
 
   /// Returns the region (country) code for [l] (e.g. "US" from "en_US").
-  /// Uses [Locale.toString()] for compatibility across Flutter versions.
+  /// Reads [Locale.countryCode], including locales with a script subtag.
   static String? localeRegionCode(Locale l) => _extractRegion(l);
 }

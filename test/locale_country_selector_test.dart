@@ -12,7 +12,7 @@ void main() {
         locales: [const Locale('en', 'CA')],
         countryLanguages: {
           'KR': ['ko'],
-          'US': ['en']
+          'US': ['en'],
         },
         fallbackCountry: 'US',
       );
@@ -25,7 +25,7 @@ void main() {
         locales: [const Locale('ko', 'KR')],
         countryLanguages: {
           'KR': ['ko'],
-          'US': ['en']
+          'US': ['en'],
         },
         fallbackCountry: 'US',
       );
@@ -38,7 +38,7 @@ void main() {
         locales: [const Locale('en', 'AU')],
         countryLanguages: {
           'US': ['en'],
-          'SG': ['en', 'zh', 'ms']
+          'SG': ['en', 'zh', 'ms'],
         },
         languageChampion: {'en': 'US'},
         fallbackCountry: 'US',
@@ -54,7 +54,7 @@ void main() {
         locales: [const Locale('en', 'AU')],
         countryLanguages: {
           'US': ['en'],
-          'SG': ['en', 'zh', 'ms']
+          'SG': ['en', 'zh', 'ms'],
         },
         fallbackCountry: 'US',
       );
@@ -67,7 +67,7 @@ void main() {
         locales: [const Locale('fr', 'CA')],
         countryLanguages: {
           'KR': ['ko'],
-          'US': ['en']
+          'US': ['en'],
         },
         fallbackCountry: 'US',
       );
@@ -81,7 +81,7 @@ void main() {
         locales: [const Locale('en', 'CA'), const Locale('ko', 'KR')],
         countryLanguages: {
           'KR': ['ko'],
-          'US': ['en']
+          'US': ['en'],
         },
         fallbackCountry: 'US',
       );
@@ -95,7 +95,7 @@ void main() {
         locales: [const Locale('ko')],
         countryLanguages: {
           'KR': ['ko'],
-          'US': ['en']
+          'US': ['en'],
         },
         fallbackCountry: 'US',
       );
@@ -108,7 +108,7 @@ void main() {
         locales: [const Locale('fr', 'FR')],
         countryLanguages: {
           'KR': ['ko'],
-          'US': ['en']
+          'US': ['en'],
         },
         fallbackCountry: 'JP',
       );
@@ -121,7 +121,7 @@ void main() {
         locales: [const Locale('fr', 'FR')],
         countryLanguages: {
           'KR': ['ko'],
-          'US': ['en']
+          'US': ['en'],
         },
         fallbackCountry: 'JP',
       );
@@ -134,7 +134,7 @@ void main() {
         locales: [const Locale('en', 'US')],
         countryLanguages: {
           'KR': ['ko'],
-          'US': ['en']
+          'US': ['en'],
         },
         languageChampion: {'en': 'KR'},
         fallbackCountry: 'US',
@@ -148,7 +148,7 @@ void main() {
         locales: [const Locale('ko')],
         countryLanguages: {
           'KR': ['ko'],
-          'JP': ['ja']
+          'JP': ['ja'],
         },
         fallbackCountry: 'JP',
       );
@@ -162,7 +162,7 @@ void main() {
         countryLanguages: {
           'US': ['en'],
           'GB': ['en'],
-          'AU': ['en']
+          'AU': ['en'],
         },
         languageChampion: {'en': 'GB'},
         fallbackCountry: 'US',
@@ -177,7 +177,7 @@ void main() {
         locales: [const Locale('en')],
         countryLanguages: {
           'US': ['en'],
-          'SG': ['en']
+          'SG': ['en'],
         },
         languageChampion: {'en': 'GB'},
         fallbackCountry: 'US',
@@ -191,7 +191,7 @@ void main() {
         locales: [const Locale('ko', 'kr')],
         countryLanguages: {
           'KR': ['ko'],
-          'US': ['en']
+          'US': ['en'],
         },
         fallbackCountry: 'us',
       );
@@ -204,7 +204,7 @@ void main() {
         locales: [],
         countryLanguages: {
           'KR': ['ko'],
-          'US': ['en']
+          'US': ['en'],
         },
         fallbackCountry: 'US',
       );
@@ -219,7 +219,7 @@ void main() {
         locales: [const Locale('en', 'GB')],
         countryLanguages: {
           'DE': ['en', 'de'],
-          'US': ['en']
+          'US': ['en'],
         },
         regionAffinityMap: {'GB': 'DE'},
         fallbackCountry: 'US',
@@ -235,7 +235,7 @@ void main() {
         locales: [const Locale('en', 'GB')],
         countryLanguages: {
           'DE': ['en', 'de'],
-          'US': ['en']
+          'US': ['en'],
         },
         fallbackCountry: 'US',
       );
@@ -249,7 +249,7 @@ void main() {
         supportedCountries: ['US'],
         locales: [const Locale('en', 'GB')],
         countryLanguages: {
-          'US': ['en']
+          'US': ['en'],
         },
         regionAffinityMap: {'GB': 'DE'},
         fallbackCountry: 'US',
@@ -263,7 +263,7 @@ void main() {
         locales: [const Locale('en', 'GB')],
         countryLanguages: {
           'DE': ['en', 'de'],
-          'US': ['en']
+          'US': ['en'],
         },
         regionAffinityMap: {' gb ': ' de '},
         fallbackCountry: 'US',
@@ -277,7 +277,7 @@ void main() {
         locales: [const Locale('fr', 'FR')],
         countryLanguages: {
           'KR': ['ko'],
-          'US': ['en']
+          'US': ['en'],
         },
         fallbackCountry: null,
       );

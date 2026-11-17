@@ -33,7 +33,7 @@ class _ExamplePageState extends State<_ExamplePage> {
   static const Map<String, List<String>> countryLanguages = {
     'KR': ['ko'],
     'US': ['en'],
-    'DE': ['de']
+    'DE': ['de'],
   };
   static const Map<String, String> languageChampion = {
     'en': 'US',
@@ -51,17 +51,13 @@ class _ExamplePageState extends State<_ExamplePage> {
   }
 
   void _refreshFromDevice() {
-    final platformLocales =
-        WidgetsBinding.instance.platformDispatcher.locales;
-    _deviceLocales = platformLocales
-        .map((l) => Locale(l.languageCode, l.countryCode))
-        .toList();
+    _deviceLocales = WidgetsBinding.instance.platformDispatcher.locales;
     _selectedCountry = LocaleCountrySelector.selectCountry(
       supportedCountries: supportedCountries,
       locales: _deviceLocales,
       countryLanguages: countryLanguages,
       languageChampion: languageChampion,
-      regionAffinityMap: {'GB': 'DE'},  // en-GB 사용자 → DE 선택
+      regionAffinityMap: {'GB': 'DE'}, // en-GB 사용자 → DE 선택
     );
     setState(() {});
   }

@@ -42,10 +42,7 @@ import 'package:flutter/widgets.dart';
 import 'package:locale_country_selector/locale_country_selector.dart';
 
 // From your Flutter app (e.g. in initState or when building):
-final platformLocales = WidgetsBinding.instance.platformDispatcher.locales;
-final locales = platformLocales
-    .map((l) => Locale(l.languageCode, l.countryCode))
-    .toList();
+final locales = WidgetsBinding.instance.platformDispatcher.locales;
 
 final country = LocaleCountrySelector.selectCountry(
   supportedCountries: ['KR', 'US'],
@@ -67,10 +64,11 @@ final country = LocaleCountrySelector.selectCountry(
   supportedCountries: ['DE', 'US'],
   locales: [const Locale('en', 'GB')],
   countryLanguages: {'DE': ['en', 'de'], 'US': ['en']},
+  languageChampion: {'en': 'US'},
   regionAffinityMap: {'GB': 'DE'},
   fallbackCountry: 'US',
 );
-// Returns 'DE' (en-GB region mapped to DE); without the map it would be 'US'.
+// Returns 'DE' (en-GB region mapped to DE); without the map it would be 'US' (the English champion).
 ```
 
 ## Configuration tips
@@ -110,7 +108,8 @@ The example shows the device’s preferred locales and the selected country usin
 ## Testing
 
 ```bash
-fvm dart test
+fvm flutter test
+fvm flutter analyze
 ```
 
 ## License
